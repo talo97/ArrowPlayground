@@ -13,6 +13,13 @@ repositories {
 dependencies {
     implementation("io.arrow-kt:arrow-core:1.2.0-RC")
     implementation("io.arrow-kt:arrow-fx-coroutines:1.2.0-RC")
+    // Database
+    implementation("org.jetbrains.exposed", "exposed-core", "0.40.1")
+    implementation("org.jetbrains.exposed", "exposed-dao", "0.40.1")
+    implementation("org.jetbrains.exposed", "exposed-jdbc", "0.40.1")
+    implementation("org.jetbrains.exposed", "exposed-java-time", "0.40.1")
+    implementation("org.postgresql:postgresql:42.6.0")
+
     testImplementation(kotlin("test"))
 }
 
@@ -21,7 +28,6 @@ tasks.test {
 }
 
 kotlin {
-    jvmToolchain(16)
 }
 
 application {
