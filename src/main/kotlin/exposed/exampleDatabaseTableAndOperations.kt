@@ -20,7 +20,7 @@ class ExampleEntity(id: EntityID<Int>) : IntEntity(id) {
     var value by ExampleTable.value
 }
 
-data class DatabaseError(val message: String)
+data class DatabaseError(val message: String) : Error
 
 fun saveExample(value: String): Either<DatabaseError, ExampleEntity> {
     return ExampleEntity.new {

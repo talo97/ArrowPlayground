@@ -1,15 +1,17 @@
 package exposed
 
+import java.lang.RuntimeException
+
 /**
  * Implementing transactional database access with Exposed and Arrow Either error handling instead of exceptions.
  */
 fun main() {
     connectDatabase()
     databaseMigration()
-
     // if you forget to bind() the result of any function that returns Either, it will not behave as expected - meaning,
     // the error will be ignored and no rollback will happen! - kind shit ngl, but no clue how to do it better w/o using
     // exceptions :/
+    testWithExceptionDeezNuts()
     testWithoutError()
     testWithoutErrorNested()
     testWithError()
@@ -18,6 +20,21 @@ fun main() {
     testWithErrorNested3()
 
     // and don't ask me why the tests aren't done simpler with JUnit and h2db ¯\_(ツ)_/¯
+}
+
+fun testWithExceptionDeezNuts() {
+    transactionButVeryChad {
+        saveExample("Should not be saved").bind()
+        if (true) {
+            throw RuntimeException("some unexpected error")
+        }
+        transactionButVeryChad {
+            saveExample("Should not be saved").bind()
+        }.bind()
+    }.fold(
+        { println(it) },
+        { println(it) }
+    )
 }
 
 fun testWithoutError() {
